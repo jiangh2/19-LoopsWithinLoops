@@ -3,15 +3,15 @@ This project demonstrates NESTED LOOPS (i.e., loops within loops)
 in the context of TWO-DIMENSIONAL GRAPHICS.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Hao Jiang.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
 
 def main():
     """ Calls the other functions to demonstrate them. """
-    run_test_draw_L()
+    #run_test_draw_L()
     run_test_draw_wall_on_right()
 
 
@@ -79,8 +79,36 @@ def draw_L(window, circle, r, c):
       :type c: int
     and m and n are small, positive integers.
     """
+    original_x = circle.center.x
+    original_y = circle.center.y
+    radius = circle.radius
+
+    x = original_x
+    y = original_y
+    for i in range(r + 3):
+        if i <= r - 1:
+            for j in range(3):
+                draw_circle = rg.Circle(rg.Point(x, y), radius)
+                draw_circle.fill_color = circle.fill_color
+                draw_circle.attach_to(window)
+                window.render(0.01)
+                x = x + 2 * radius
+                y = y
+            x = original_x
+            y = y + 2 * radius
+        else:
+            for j in range(8):
+                draw_circle = rg.Circle(rg.Point(x, y), radius)
+                draw_circle.fill_color = circle.fill_color
+                draw_circle.attach_to(window)
+                window.render(0.01)
+                x = x + 2 * radius
+                y = y
+            x = original_x
+            y = y + 2 * radius
+
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
 
@@ -120,8 +148,30 @@ def draw_wall_on_right(rectangle, n, window):
       :type window: rg.RoseWindow
     and n is a small, positive integer.
     """
+    original_corner_1 = rectangle.corner_1
+    original_corner_2 = rectangle.corner_2
+    x_1 = original_corner_1.x
+    y_1 = original_corner_1.y
+    x_2 = original_corner_2.x
+    y_2 = original_corner_2.y
+    length = abs(x_2 - x_1)
+    height = abs(y_2 - y_1)
+    for i in range(n):
+        for j in range(i + 1):
+            draw_rectangle = rg.Rectangle(rg.Point(x_1, y_1), rg.Point(x_2, y_2))
+            draw_rectangle.fill_color = rectangle.fill_color
+            draw_rectangle.attach_to(window)
+            window.render(0.1)
+            x_1 = x_1 - length
+            y_1 = y_1
+            x_2 = x_2 - length
+            y_2 = y_2
+        x_1 = original_corner_1.x
+        y_1 = y_1 + height
+        x_2 = original_corner_2.x
+        y_2 = y_2 + height
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DONE: 3. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
 
